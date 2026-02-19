@@ -1,0 +1,1773 @@
+// ARK Server Configuration AI — Settings Database
+// All entries are documented ARK: Survival Evolved / Ascended settings only.
+// Format: { id, file, section, key, type, valid_range, default, gameplay_effect, dependencies, support }
+
+export const SETTINGS_DB = [
+
+    // ─── GAME USER SETTINGS ───────────────────────────────────────────────────
+
+    // === Difficulty ===
+    {
+        id: "difficulty_offset",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "DifficultyOffset",
+        type: "float",
+        valid_range: [0.0, 1.0],
+        default: 1.0,
+        gameplay_effect: "Controls wild creature level range. 1.0 = enables max level via OverrideOfficialDifficulty.",
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    },
+    {
+        id: "override_official_difficulty",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "OverrideOfficialDifficulty",
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 5.0,
+        gameplay_effect: "Overrides max creature level. 5.0 = max level 150. 10.0 = max level 300.",
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    },
+
+    // === XP ===
+    {
+        id: "xp_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "XPMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies all XP gained by players.",
+        dependencies: [],
+        support: "both",
+        category: "xp"
+    },
+
+    // === Taming ===
+    {
+        id: "taming_speed_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "TamingSpeedMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies taming speed. 3.0 = 3x faster taming.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+    {
+        id: "dino_character_food_drain_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "DinoCharacterFoodDrainMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls how fast dino food drains. Lower = slower drain, easier taming.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+
+    // === Harvesting ===
+    {
+        id: "harvest_amount_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "HarvestAmountMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies resources gathered per harvest action.",
+        dependencies: [],
+        support: "both",
+        category: "harvesting"
+    },
+    {
+        id: "resource_respawn_period_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "ResourceRespawnPeriodMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls how fast resources respawn. Lower = faster respawn.",
+        dependencies: [],
+        support: "both",
+        category: "harvesting"
+    },
+    {
+        id: "harvest_health_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "HarvestHealthMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies health of harvestable nodes (trees, rocks). Higher = more hits needed.",
+        dependencies: [],
+        support: "both",
+        category: "harvesting"
+    },
+
+    // === Player Stats ===
+    {
+        id: "player_character_water_drain_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PlayerCharacterWaterDrainMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls player thirst drain rate. Lower = less frequent drinking needed.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "player_character_food_drain_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PlayerCharacterFoodDrainMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls player hunger drain rate. Lower = less frequent eating needed.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "player_character_stamina_drain_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PlayerCharacterStaminaDrainMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls stamina drain rate. Lower = less frequent rest needed.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "player_character_health_recovery_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PlayerCharacterHealthRecoveryMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies player health regeneration speed.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+
+    // === Dino Stats ===
+    {
+        id: "dino_character_health_recovery_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "DinoCharacterHealthRecoveryMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies dino health regeneration speed.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "dino_damage_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "DinoDamageMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage dealt by wild dinos to players.",
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    },
+    {
+        id: "player_damage_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PlayerDamageMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage dealt by players.",
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    },
+    {
+        id: "dino_resistance_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "DinoResistanceMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage dinos receive. Lower = dinos take more damage (easier).",
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    },
+    {
+        id: "player_resistance_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PlayerResistanceMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage players receive. Lower = players take more damage (harder).",
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    },
+
+    // === Structure ===
+    {
+        id: "structure_damage_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "StructureDamageMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage dealt to structures. Higher = easier raiding (PvP).",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "structure_resistance_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "StructureResistanceMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage structures receive. Lower = structures take more damage.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+
+    // === Loot ===
+    {
+        id: "fishing_loot_quality_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "FishingLootQualityMultiplier",
+        type: "float",
+        valid_range: [0.0, 5.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies quality of items obtained from fishing.",
+        dependencies: [],
+        support: "both",
+        category: "loot"
+    },
+    {
+        id: "supply_crate_loot_quality_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "SupplyCrateLootQualityMultiplier",
+        type: "float",
+        valid_range: [0.0, 5.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies quality of items in supply drops and beacons.",
+        dependencies: [],
+        support: "both",
+        category: "loot"
+    },
+
+    // === PvP/PvE Flags ===
+    {
+        id: "pvp_zone_structure_damage_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PvPZoneStructureDamageMultiplier",
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 6.0,
+        gameplay_effect: "Damage multiplier for structures in PvP zones.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "server_pvp",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "serverPVP",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Enables PvP on the server. false = PvE only.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "allow_third_person_player",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "AllowThirdPersonPlayer",
+        type: "bool",
+        valid_range: [true, false],
+        default: true,
+        gameplay_effect: "Allows players to use third-person camera.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "always_notify_player_left",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "AlwaysNotifyPlayerLeft",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Notifies all players when someone leaves the server.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "always_notify_player_joined",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "AlwaysNotifyPlayerJoined",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Notifies all players when someone joins the server.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "allow_anyone_baby_imprint_cuddle",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "AllowAnyoneBabyImprintCuddle",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows any player (not just the imprinter) to cuddle babies.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "enable_pvp_gamma",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "EnablePvPGamma",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows gamma adjustment in PvP mode.",
+        dependencies: ["server_pvp"],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "show_map_player_location",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "ShowMapPlayerLocation",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Shows player location on the map.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "max_platform_saddle_structure_limit",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "MaxPlatformSaddleStructureLimit",
+        type: "int",
+        valid_range: [0, 500],
+        default: 75,
+        gameplay_effect: "Maximum structures allowed on platform saddles.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "per_platform_max_structures_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PerPlatformMaxStructuresMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies the max structures per platform saddle.",
+        dependencies: ["max_platform_saddle_structure_limit"],
+        support: "both",
+        category: "building"
+    },
+
+    // ─── GAME.INI ─────────────────────────────────────────────────────────────
+
+    // === Breeding ===
+    {
+        id: "baby_mature_speed_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "BabyMatureSpeedMultiplier",
+        type: "float",
+        valid_range: [0.001, 1000.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies baby maturation speed. Higher = faster growing.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "egg_hatch_speed_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "EggHatchSpeedMultiplier",
+        type: "float",
+        valid_range: [0.001, 1000.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies egg hatching speed. Higher = faster hatching.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "baby_food_consumption_speed_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "BabyFoodConsumptionSpeedMultiplier",
+        type: "float",
+        valid_range: [0.001, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls how fast baby dinos consume food. Lower = less food needed.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "baby_imprinting_stat_scale_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "BabyImprintingStatScaleMultiplier",
+        type: "float",
+        valid_range: [0.0, 50.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies the stat bonus from imprinting. Higher = stronger imprint bonus.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "baby_imprint_amount_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "BabyImprintAmountMultiplier",
+        type: "float",
+        valid_range: [0.0, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies imprint progress per cuddle. 24x = 100% imprint from a single cuddle on a Giga.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "baby_cuddle_interval_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "BabyCuddleIntervalMultiplier",
+        type: "float",
+        valid_range: [0.001, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls time between imprint cuddles. Lower = more frequent cuddles needed.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "baby_cuddle_grace_period_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "BabyCuddleGracePeriodMultiplier",
+        type: "float",
+        valid_range: [0.001, 10.0],
+        default: 1.0,
+        gameplay_effect: "Extends the grace period for missed imprint cuddles.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "mating_interval_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "MatingIntervalMultiplier",
+        type: "float",
+        valid_range: [0.001, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls cooldown between dino matings. Lower = shorter cooldown.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "mating_speed_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "MatingSpeedMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies mating speed. Higher = faster mating completion.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+
+    // === XP (Game.ini) ===
+    {
+        id: "kill_xp_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "KillXPMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies XP gained from killing creatures.",
+        dependencies: [],
+        support: "both",
+        category: "xp"
+    },
+    {
+        id: "harvest_xp_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "HarvestXPMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies XP gained from harvesting resources.",
+        dependencies: [],
+        support: "both",
+        category: "xp"
+    },
+    {
+        id: "craft_xp_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "CraftXPMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies XP gained from crafting items.",
+        dependencies: [],
+        support: "both",
+        category: "xp"
+    },
+    {
+        id: "generic_xp_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "GenericXPMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies XP gained from miscellaneous actions.",
+        dependencies: [],
+        support: "both",
+        category: "xp"
+    },
+    {
+        id: "special_xp_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "SpecialXPMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies XP gained from special events.",
+        dependencies: [],
+        support: "both",
+        category: "xp"
+    },
+
+    // === Crafting ===
+    {
+        id: "crafting_skill_bonus_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "CraftingSkillBonusMultiplier",
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies the bonus from crafting skill on item quality.",
+        dependencies: [],
+        support: "both",
+        category: "loot"
+    },
+
+    // === Building ===
+    {
+        id: "structure_pickup_time_after_placement",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "StructurePickupTimeAfterPlacement",
+        type: "float",
+        valid_range: [0.0, 86400.0],
+        default: 30.0,
+        gameplay_effect: "Seconds after placement during which a structure can be picked up.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "structure_pickup_hold_duration",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "StructurePickupHoldDuration",
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 0.5,
+        gameplay_effect: "Hold duration in seconds to pick up a structure.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "allow_structure_pickup",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "AlwaysAllowStructurePickup",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows players to always pick up placed structures (ignores time window).",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "disable_structure_placement_collision",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bDisableStructurePlacementCollision",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables collision checks when placing structures (more flexible building).",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "fast_decay_unsnapped_core_structures",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "FastDecayUnsnappedCoreStructures",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Enables faster decay for unsnapped foundation/pillar structures.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "pve_structure_decay_period_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PvEStructureDecayPeriodMultiplier",
+        type: "float",
+        valid_range: [0.0, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies structure decay time in PvE. Higher = structures last longer.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+
+    // === Wild Dino ===
+    {
+        id: "wild_dino_character_food_drain_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "WildDinoCharacterFoodDrainMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls wild dino food drain. Affects taming efficiency.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+    {
+        id: "wild_dino_torpor_drain_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "WildDinoTorporDrainMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls how fast torpor drains from knocked-out wild dinos. Lower = easier taming.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+    {
+        id: "tamed_dino_torpor_drain_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "TamedDinoTorporDrainMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Controls torpor drain on tamed dinos.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+
+    // === Max Tamed Dinos ===
+    {
+        id: "max_tamed_dinos",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "MaxTamedDinos",
+        type: "int",
+        valid_range: [1, 50000],
+        default: 5000,
+        gameplay_effect: "Maximum number of tamed dinos allowed on the server.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+
+    // === Night/Day ===
+    {
+        id: "day_cycle_speed_scale",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "DayCycleSpeedScale",
+        type: "float",
+        valid_range: [0.001, 100.0],
+        default: 1.0,
+        gameplay_effect: "Controls overall day/night cycle speed. Higher = faster days.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "day_time_speed_scale",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "DayTimeSpeedScale",
+        type: "float",
+        valid_range: [0.001, 100.0],
+        default: 1.0,
+        gameplay_effect: "Controls daytime speed specifically. Higher = shorter days.",
+        dependencies: ["day_cycle_speed_scale"],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "night_time_speed_scale",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "NightTimeSpeedScale",
+        type: "float",
+        valid_range: [0.001, 100.0],
+        default: 1.0,
+        gameplay_effect: "Controls nighttime speed. Higher = shorter nights.",
+        dependencies: ["day_cycle_speed_scale"],
+        support: "both",
+        category: "qol"
+    },
+
+    // === Tribe / Player Limits ===
+    {
+        id: "max_tribe_size",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "MaxNumberOfPlayersInTribe",
+        type: "int",
+        valid_range: [1, 1000],
+        default: 0,
+        gameplay_effect: "Maximum number of players allowed in a tribe. 0 = unlimited.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+
+    // === Loot (Game.ini) ===
+    {
+        id: "item_stack_size_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "ItemStackSizeMultiplier",
+        type: "float",
+        valid_range: [0.1, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies max stack size for all items. Higher = less inventory management.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+
+    // === Corpse Decay ===
+    // (GlobalCorpseDecompositionTimeMultiplier is also defined in the ASA section below)
+
+    // === Spoiling ===
+    {
+        id: "spoiling_time_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "GlobalSpoilingTimeMultiplier",
+        type: "float",
+        valid_range: [0.001, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies how long food takes to spoil. Higher = slower spoiling.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+
+    // === Fuel Consumption ===
+    {
+        id: "fuel_consumption_interval_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "FuelConsumptionIntervalMultiplier",
+        type: "float",
+        valid_range: [0.001, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies fuel consumption interval. Higher = generators/forges use less fuel.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+
+    // === PvP Specific ===
+    {
+        id: "pvp_dino_decay",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PvPDinoDecay",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Enables dino decay in PvP mode.",
+        dependencies: ["server_pvp"],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "pvp_structure_decay",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PvPStructureDecay",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Enables structure decay in PvP mode.",
+        dependencies: ["server_pvp"],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "allow_flyer_carry_pve",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "AllowFlyerCarryPvE",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows flyers to carry wild dinos in PvE mode.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "disable_dino_taming_sickness",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bDisableDinoTamingSickness",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables the post-tame sickness period for dinos.",
+        dependencies: [],
+        support: "ase",
+        category: "taming"
+    },
+
+    // ─── ASA-SPECIFIC GAME.INI SETTINGS ──────────────────────────────────────
+
+    // === General / Gameplay ===
+    {
+        id: "disable_genesis_missions",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bDisableGenesisMissions",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables Genesis missions on the server.",
+        dependencies: [],
+        support: "asa",
+        category: "qol"
+    },
+    {
+        id: "show_creative_mode",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bShowCreativeMode",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Makes the creative mode option visible to players.",
+        dependencies: [],
+        support: "asa",
+        category: "qol"
+    },
+    {
+        id: "auto_unlock_all_engrams",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bAutoUnlockAllEngrams",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Automatically unlocks all engrams for all players.",
+        dependencies: [],
+        support: "asa",
+        category: "xp"
+    },
+    {
+        id: "kick_idle_players_period",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "KickIdlePlayersPeriod",
+        type: "int",
+        valid_range: [0, 86400],
+        default: 3600,
+        gameplay_effect: "Seconds of inactivity before a player is kicked. 0 = disabled.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+
+    // === Building (ASA) ===
+    {
+        id: "ignore_structures_prevention_volumes",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bIgnoreStructuresPreventionVolumes",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows building in normally restricted zones.",
+        dependencies: [],
+        support: "asa",
+        category: "building"
+    },
+    {
+        id: "genesis_use_structures_prevention_volumes",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bGenesisUseStructuresPreventionVolumes",
+        type: "bool",
+        valid_range: [true, false],
+        default: true,
+        gameplay_effect: "Enables build-restriction zones on Genesis maps.",
+        dependencies: [],
+        support: "asa",
+        category: "building"
+    },
+    {
+        id: "allow_platform_saddle_multi_floors",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bAllowPlatformSaddleMultiFloors",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows multiple floor layers on platform saddles.",
+        dependencies: [],
+        support: "asa",
+        category: "building"
+    },
+    {
+        id: "fast_decay_interval",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "FastDecayInterval",
+        type: "int",
+        valid_range: [0, 86400],
+        default: 43200,
+        gameplay_effect: "Interval in seconds for accelerated structure decay. Lower = faster decay of abandoned structures.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "structure_damage_repair_cooldown",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "StructureDamageRepairCooldown",
+        type: "int",
+        valid_range: [0, 3600],
+        default: 180,
+        gameplay_effect: "Cooldown in seconds before a damaged structure can be repaired.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+
+    // === Tribe & Alliance ===
+    {
+        id: "max_tribe_logs",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "MaxTribeLogs",
+        type: "int",
+        valid_range: [1, 1000],
+        default: 400,
+        gameplay_effect: "Maximum number of tribe log entries stored.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "max_alliances_per_tribe",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "MaxAlliancesPerTribe",
+        type: "int",
+        valid_range: [0, 100],
+        default: 10,
+        gameplay_effect: "Maximum number of alliances a tribe can have.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "disable_friendly_fire",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bDisableFriendlyFire",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables damage between tribe members.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "pve_disable_friendly_fire",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bPvEDisableFriendlyFire",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables friendly fire specifically in PvE mode.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "pve_allow_tribe_war",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bPvEAllowTribeWar",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows tribes to declare war on each other in PvE.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "pve_allow_tribe_war_cancel",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bPvEAllowTribeWarCancel",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows tribes to cancel declared wars in PvE.",
+        dependencies: ["pve_allow_tribe_war"],
+        support: "both",
+        category: "pvp"
+    },
+
+    // === Turrets & Defense ===
+    {
+        id: "limit_turrets_in_range",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bLimitTurretsInRange",
+        type: "bool",
+        valid_range: [true, false],
+        default: true,
+        gameplay_effect: "Enables a turret count limit within a radius.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "limit_turrets_range",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "LimitTurretsRange",
+        type: "int",
+        valid_range: [1000, 100000],
+        default: 10000,
+        gameplay_effect: "Radius in units for the turret limit check.",
+        dependencies: ["limit_turrets_in_range"],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "limit_turrets_num",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "LimitTurretsNum",
+        type: "int",
+        valid_range: [1, 1000],
+        default: 100,
+        gameplay_effect: "Maximum number of turrets allowed within the limit radius.",
+        dependencies: ["limit_turrets_in_range"],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "hard_limit_turrets_in_range",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bHardLimitTurretsInRange",
+        type: "bool",
+        valid_range: [true, false],
+        default: true,
+        gameplay_effect: "Enforces turret limit strictly — no exceptions.",
+        dependencies: ["limit_turrets_in_range"],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "passive_defenses_damage_riderless_dinos",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bPassiveDefensesDamageRiderlessDinos",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows passive defenses (spike walls, etc.) to damage riderless dinos.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "dino_turret_damage_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "DinoTurretDamageMultiplier",
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage dealt by dino-mounted turrets.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+
+    // === Dino Behavior ===
+    {
+        id: "disable_dino_riding",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bDisableDinoRiding",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables riding of tamed dinos.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+    {
+        id: "disable_dino_taming",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bDisableDinoTaming",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables taming of all dinos.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+    {
+        id: "use_tame_limit_for_structures_only",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bUseTameLimitForStructuresOnly",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Applies tame limit only to dinos near structures.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+    {
+        id: "passive_tame_interval_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "PassiveTameIntervalMultiplier",
+        type: "float",
+        valid_range: [0.001, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies the interval for passive taming. Lower = faster passive taming.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+
+    // === Dino Harvesting ===
+    {
+        id: "player_harvesting_damage_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "PlayerHarvestingDamageMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies harvesting damage dealt by players (affects resource yield).",
+        dependencies: [],
+        support: "both",
+        category: "harvesting"
+    },
+    {
+        id: "dino_harvesting_damage_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "DinoHarvestingDamageMultiplier",
+        type: "float",
+        valid_range: [0.1, 20.0],
+        default: 3.2,
+        gameplay_effect: "Multiplies harvesting damage dealt by dinos. Higher = dinos gather more resources. Default is 3.2 (not 1.0).",
+        dependencies: [],
+        support: "both",
+        category: "harvesting"
+    },
+
+    // === Breeding (ASA extras) ===
+    {
+        id: "lay_egg_interval_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "LayEggIntervalMultiplier",
+        type: "float",
+        valid_range: [0.001, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies the interval between egg laying. Lower = eggs laid more frequently.",
+        dependencies: [],
+        support: "both",
+        category: "breeding"
+    },
+    {
+        id: "baby_imprint_amount_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "BabyImprintAmountMultiplier",
+        type: "float",
+        valid_range: [0.0, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies imprint progress per cuddle. Higher = reach 100% imprint faster.",
+        dependencies: [],
+        support: "asa",
+        category: "breeding"
+    },
+
+    // === Environment ===
+    {
+        id: "base_temperature_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "BaseTemperatureMultiplier",
+        type: "float",
+        valid_range: [0.0, 2.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies ambient temperature. Lower = milder climate, less temperature management.",
+        dependencies: [],
+        support: "asa",
+        category: "qol"
+    },
+
+    {
+        id: "global_item_decomposition_time_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "GlobalItemDecompositionTimeMultiplier",
+        type: "float",
+        valid_range: [0.001, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies how long dropped items persist before disappearing.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "global_corpse_decomposition_time_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "GlobalCorpseDecompositionTimeMultiplier",
+        type: "float",
+        valid_range: [0.001, 100.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies how long corpses stay before despawning.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+
+    // === Loot (ASA) ===
+    {
+        id: "disable_loot_crates",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bDisableLootCrates",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables supply crate drops on the map.",
+        dependencies: [],
+        support: "both",
+        category: "loot"
+    },
+    {
+        id: "random_supply_crate_points",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "RandomSupplyCratePoints",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Makes supply crates spawn at random locations instead of fixed points.",
+        dependencies: [],
+        support: "both",
+        category: "loot"
+    },
+
+    // === XP (ASA extras) ===
+    {
+        id: "override_max_experience_points_player",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "OverrideMaxExperiencePointsPlayer",
+        type: "int",
+        valid_range: [0, 999999999],
+        default: 0,
+        gameplay_effect: "Overrides the maximum XP cap for players. 0 = use default cap.",
+        dependencies: [],
+        support: "both",
+        category: "xp"
+    },
+
+    // === Crafting (ASA) ===
+    {
+        id: "allow_custom_recipes",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "bAllowCustomRecipes",
+        type: "bool",
+        valid_range: [true, false],
+        default: true,
+        gameplay_effect: "Allows players to create custom food recipes.",
+        dependencies: [],
+        support: "both",
+        category: "loot"
+    },
+    {
+        id: "custom_recipe_effectiveness_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "CustomRecipeEffectivenessMultiplier",
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies the effectiveness of custom recipes.",
+        dependencies: ["allow_custom_recipes"],
+        support: "both",
+        category: "loot"
+    },
+    {
+        id: "custom_recipe_skill_multiplier",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "CustomRecipeSkillMultiplier",
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies the skill influence on custom recipe quality.",
+        dependencies: ["allow_custom_recipes"],
+        support: "both",
+        category: "loot"
+    },
+
+    // === PerLevelStats — Player ===
+    ...Array.from({ length: 12 }, (_, i) => ({
+        id: `per_level_stats_player_${i}`,
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: `PerLevelStatsMultiplier_Player[${i}]`,
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 1.0,
+        gameplay_effect: [
+            "Player HP per level", "Player Stamina per level", "Player Oxygen per level",
+            "Player Food per level", "Player Water per level", "Player Weight per level",
+            "Player Melee Damage per level", "Player Movement Speed per level",
+            "Player Temperature Resistance per level", "Player Crafting Skill per level",
+            "Player Torpidity per level", "Player Ranged Damage per level"
+        ][i] || `Player stat ${i} per level`,
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    })),
+
+    // === PerLevelStats — Wild Dino ===
+    ...Array.from({ length: 10 }, (_, i) => ({
+        id: `per_level_stats_dino_wild_${i}`,
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: `PerLevelStatsMultiplier_DinoWild[${i}]`,
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: 1.0,
+        gameplay_effect: [
+            "Wild dino HP per level", "Wild dino Stamina per level", "Wild dino Oxygen per level",
+            "Wild dino Food per level", "Wild dino Water per level", "Wild dino Weight per level",
+            "Wild dino Melee Damage per level", "Wild dino Movement Speed per level",
+            "Wild dino Temperature Resistance per level", "Wild dino Torpidity per level"
+        ][i] || `Wild dino stat ${i} per level`,
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    })),
+
+    // === PerLevelStats — Tamed Dino ===
+    ...Array.from({ length: 10 }, (_, i) => ({
+        id: `per_level_stats_dino_tamed_${i}`,
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: `PerLevelStatsMultiplier_DinoTamed[${i}]`,
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: i === 8 ? 0.17 : 1.0,
+        gameplay_effect: [
+            "Tamed dino HP per level", "Tamed dino Stamina per level", "Tamed dino Oxygen per level",
+            "Tamed dino Food per level", "Tamed dino Water per level", "Tamed dino Weight per level",
+            "Tamed dino Melee Damage per level", "Tamed dino Movement Speed per level",
+            "Tamed dino Temperature Resistance per level", "Tamed dino Torpidity per level"
+        ][i] || `Tamed dino stat ${i} per level`,
+        dependencies: [],
+        support: "both",
+        category: "difficulty"
+    })),
+
+    // === PerLevelStats — Tamed Add (taming bonus) ===
+    ...Array.from({ length: 10 }, (_, i) => ({
+        id: `per_level_stats_dino_tamed_add_${i}`,
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: `PerLevelStatsMultiplier_DinoTamed_Add[${i}]`,
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: i === 0 || i === 8 ? 0.14 : 1.0,
+        gameplay_effect: [
+            "Taming bonus HP", "Taming bonus Stamina", "Taming bonus Oxygen",
+            "Taming bonus Food", "Taming bonus Water", "Taming bonus Weight",
+            "Taming bonus Melee Damage", "Taming bonus Movement Speed",
+            "Taming bonus Temperature Resistance", "Taming bonus Torpidity"
+        ][i] || `Taming add stat ${i}`,
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    })),
+
+    // === PerLevelStats — Tamed Affinity (taming efficiency bonus) ===
+    ...Array.from({ length: 10 }, (_, i) => ({
+        id: `per_level_stats_dino_tamed_affinity_${i}`,
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: `PerLevelStatsMultiplier_DinoTamed_Affinity[${i}]`,
+        type: "float",
+        valid_range: [0.0, 10.0],
+        default: i === 0 || i === 8 ? 0.44 : 1.0,
+        gameplay_effect: [
+            "Taming efficiency HP bonus", "Taming efficiency Stamina bonus", "Taming efficiency Oxygen bonus",
+            "Taming efficiency Food bonus", "Taming efficiency Water bonus", "Taming efficiency Weight bonus",
+            "Taming efficiency Melee Damage bonus", "Taming efficiency Movement Speed bonus",
+            "Taming efficiency Temperature Resistance bonus", "Taming efficiency Torpidity bonus"
+        ][i] || `Taming affinity stat ${i}`,
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    })),
+
+    // ─── ASA-SPECIFIC GAMEUSERSETTINGS.INI SETTINGS ──────────────────────────
+
+    // === Taming (GUS) ===
+    {
+        id: "tamed_dino_damage_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "TamedDinoDamageMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage dealt by tamed dinos.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+    {
+        id: "tamed_dino_resistance_multiplier",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "TamedDinoResistanceMultiplier",
+        type: "float",
+        valid_range: [0.1, 10.0],
+        default: 1.0,
+        gameplay_effect: "Multiplies damage tamed dinos receive. Lower = tamed dinos take more damage.",
+        dependencies: [],
+        support: "both",
+        category: "taming"
+    },
+    // === Building (GUS) ===
+    {
+        id: "allow_cave_building_pve",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "AllowCaveBuildingPvE",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Allows building inside caves in PvE mode.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+
+    {
+        id: "disable_structure_decay_pve",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "DisableStructureDecayPvE",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Disables automatic structure decay in PvE.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "pve_structure_decay_destruction_period",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PvEStructureDecayDestructionPeriod",
+        type: "float",
+        valid_range: [0.0, 100.0],
+        default: 1.0,
+        gameplay_effect: "How long decayed PvE structures remain before being destroyed.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+    {
+        id: "max_structures_in_range",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "MaxStructuresInRange",
+        type: "int",
+        valid_range: [1000, 20000],
+        default: 6700,
+        gameplay_effect: "Maximum number of structures allowed in a given area.",
+        dependencies: [],
+        support: "both",
+        category: "building"
+    },
+
+    // === Resources (GUS) ===
+    {
+        id: "resource_no_replenish_radius_players",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "ResourceNoReplenishRadiusPlayers",
+        type: "float",
+        valid_range: [0.0, 5.0],
+        default: 1.0,
+        gameplay_effect: "Radius multiplier around players where resources don't respawn. Lower = resources respawn closer.",
+        dependencies: [],
+        support: "both",
+        category: "harvesting"
+    },
+    {
+        id: "resource_no_replenish_radius_structures",
+        file: "Game.ini",
+        section: "/Script/ShooterGame.ShooterGameMode",
+        key: "ResourceNoReplenishRadiusStructures",
+        type: "float",
+        valid_range: [0.0, 5.0],
+        default: 1.0,
+        gameplay_effect: "Radius multiplier around structures where resources don't respawn. Lower = resources respawn closer.",
+        dependencies: [],
+        support: "both",
+        category: "harvesting"
+    },
+
+    // === Server / Communication (GUS) ===
+    {
+        id: "global_voice_chat",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "globalVoiceChat",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Enables global voice chat across the entire map.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "proximity_chat",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "proximityChat",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Enables proximity-based voice chat.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+    {
+        id: "server_crosshair",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "ServerCrosshair",
+        type: "bool",
+        valid_range: [true, false],
+        default: true,
+        gameplay_effect: "Enables the crosshair on the server.",
+        dependencies: [],
+        support: "both",
+        category: "qol"
+    },
+
+    // === Downloads & Transfers (GUS) ===
+    {
+        id: "no_tribute_downloads",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "noTributeDownloads",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Prevents downloading characters/items/dinos from obelisks.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "prevent_download_survivors",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PreventDownloadSurvivors",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Prevents downloading player characters from other servers.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "prevent_download_items",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PreventDownloadItems",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Prevents downloading items from other servers.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+    {
+        id: "prevent_download_dinos",
+        file: "GameUserSettings.ini",
+        section: "ServerSettings",
+        key: "PreventDownloadDinos",
+        type: "bool",
+        valid_range: [true, false],
+        default: false,
+        gameplay_effect: "Prevents downloading tamed dinos from other servers.",
+        dependencies: [],
+        support: "both",
+        category: "pvp"
+    },
+];
+
+// Helper: get settings by category
+export function getByCategory(category) {
+    return SETTINGS_DB.filter(s => s.category === category);
+}
+
+// Helper: get setting by id
+export function getById(id) {
+    return SETTINGS_DB.find(s => s.id === id);
+}
+
+// Helper: get all categories
+export function getCategories() {
+    return [...new Set(SETTINGS_DB.map(s => s.category))];
+}
+
+// Helper: get settings by file
+export function getByFile(file) {
+    return SETTINGS_DB.filter(s => s.file === file);
+}
