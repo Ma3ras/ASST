@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ark-server-settings-tool.netlify.app/sitemap.xml
