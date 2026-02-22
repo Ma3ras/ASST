@@ -450,7 +450,7 @@ export const PRESETS = {
         player_harvesting_damage_multiplier: 1.0,
         dino_harvesting_damage_multiplier: 3.2,
         // Breeding — Instant (same as real server)
-        mating_interval_multiplier: 0.0001,
+        mating_interval_multiplier: 0.0278,
         mating_speed_multiplier: 40.0,
         lay_egg_interval_multiplier: 1.0,
         egg_hatch_speed_multiplier: 240.0,
@@ -598,7 +598,7 @@ export const PRESETS = {
         player_harvesting_damage_multiplier: 1.0,
         dino_harvesting_damage_multiplier: 3.2,
         // Breeding — Instant (same as pve_beginner)
-        mating_interval_multiplier: 0.0001,
+        mating_interval_multiplier: 0.0278,
         mating_speed_multiplier: 40.0,
         lay_egg_interval_multiplier: 1.0,
         egg_hatch_speed_multiplier: 240.0,
@@ -708,8 +708,8 @@ export const PRESETS = {
     // ─── PvE STANDARD + QUICK BREEDING ────────────────────────────────────────
     pve_standard_qb: {
         label: "PvE Standard + Quick Breeding",
-        description: "PvE Standard mit Quick Breeding: ~38 min Ei, ~2h26min Auswachsen, 1 Imprint bei ~80 min = 100%. Vanilla Wild Dinos, 10x Taming.",
-        tags: ["2x Farming", "10x Taming", "Quick Breeding", "Vanilla Wild Dinos"],
+        description: "PvE Standard mit Quick Breeding: ~75 min Ei, ~2h26min Auswachsen, 1 Imprint bei ~12 min = 100%. Vanilla Wild Dinos, 3x Taming.",
+        tags: ["2x Farming", "3x Taming", "Quick Breeding", "Vanilla Wild Dinos"],
         // Difficulty — vanilla wild dino stats, vanilla damage
         difficulty_offset: 1.0,
         override_official_difficulty: 5.0,
@@ -726,7 +726,7 @@ export const PRESETS = {
         special_xp_multiplier: 1.0,
         override_max_experience_points_player: 0,
         // Taming — 10x, vanilla damage
-        taming_speed_multiplier: 10.0,
+        taming_speed_multiplier: 3.0,
         tamed_dino_damage_multiplier: 1.0,
         tamed_dino_resistance_multiplier: 1.0,
         wild_dino_torpor_drain_multiplier: 1.0,
@@ -739,7 +739,7 @@ export const PRESETS = {
         max_tamed_dinos: 8000,
         // Harvesting — 2x
         harvest_amount_multiplier: 2.0,
-        harvest_health_multiplier: 2.0,
+        harvest_health_multiplier: 1.0,
         resource_respawn_period_multiplier: 0.1,
         resource_no_replenish_radius_players: 0.3,
         resource_no_replenish_radius_structures: 0.4,
@@ -750,14 +750,14 @@ export const PRESETS = {
         // - Mating Interval: 18h - 48h
         // - Egg Hatching: ~49.8h
         // - Maturation: ~280h
-        // Target settings: ~8m-22m interval, ~3m speed, ~12m hatch, ~70m maturation, 1 imprint @ ~35m
-        mating_interval_multiplier: 0.0074,
+        // Target settings: ~30m-80m interval, ~3m speed, ~12m-75m hatch, ~70m maturation, 1 imprint @ ~35m
+        mating_interval_multiplier: 0.0278,
         mating_speed_multiplier: 0.833,
         lay_egg_interval_multiplier: 1.0,
-        egg_hatch_speed_multiplier: 248.0,
+        egg_hatch_speed_multiplier: 39.66,
         baby_mature_speed_multiplier: 201.1,
-        baby_cuddle_interval_multiplier: 0.076,
-        baby_imprinting_stat_scale_multiplier: 5.0,
+        baby_cuddle_interval_multiplier: 0.026,
+        baby_imprinting_stat_scale_multiplier: 1.0,
         baby_imprint_amount_multiplier: 50.0,
         baby_food_consumption_speed_multiplier: 1.0,
         baby_cuddle_grace_period_multiplier: 5.0,
@@ -863,7 +863,7 @@ export const PRESETS = {
         label: "Instant Breeding",
         description: "Breeding-only overlay preset. Instant mating, ~38 sec egg, ~9 min mature, easy imprint.",
         // Mating — instant
-        mating_interval_multiplier: 0.0001,
+        mating_interval_multiplier: 0.0278,
         mating_speed_multiplier: 40.0,
         lay_egg_interval_multiplier: 1.0,
         // Egg & maturation — 240x / 480x
@@ -889,7 +889,7 @@ export const PRESETS = {
         // - Mating Interval: 18h - 48h
         // - Egg Hatching: ~49.8h
         // - Maturation: ~280h
-        egg_hatch_speed_multiplier: 248.0,
+        egg_hatch_speed_multiplier: 39.66,
         baby_mature_speed_multiplier: 201.1,
         // Food consumption — keep manageable
         baby_food_consumption_speed_multiplier: 1.0,
@@ -902,8 +902,8 @@ export const PRESETS = {
         baby_imprint_amount_multiplier: 50.0,
         baby_imprinting_stat_scale_multiplier: 5.0,
         allow_anyone_baby_imprint_cuddle: true,
-        // Mating — ~8m-22m interval, ~3m speed
-        mating_interval_multiplier: 0.0074,
+        // Mating — ~30m-80m interval, ~3m speed
+        mating_interval_multiplier: 0.0278,
         mating_speed_multiplier: 0.833,
         lay_egg_interval_multiplier: 1.0,
     },
@@ -949,7 +949,7 @@ export const PRESETS = {
         player_harvesting_damage_multiplier: 1.0,
         dino_harvesting_damage_multiplier: 3.2,
         // Breeding
-        mating_interval_multiplier: 0.0001,
+        mating_interval_multiplier: 0.0278,
         mating_speed_multiplier: 40.0,
         lay_egg_interval_multiplier: 1.0,
         egg_hatch_speed_multiplier: 240.0,
