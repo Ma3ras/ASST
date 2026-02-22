@@ -10,6 +10,7 @@ import { Questionnaire, MODE_B_CATEGORIES } from './ui/questionnaire.js';
 import { renderOutput } from './ui/output.js';
 import { renderTuner } from './ui/tuner.js';
 import { PRESETS } from './db/presets.js';
+import { SETTINGS_DB } from './db/settings_db.js';
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
 
@@ -21,7 +22,53 @@ let state = {
   weights: null,
   values: null,
   output: null,
+  directPreset: null
 };
+
+// ─── LOCAL STORAGE PERSISTENCE ────────────────────────────────────────────────
+
+const STORAGE_KEY = 'ark_config_state';
+
+function saveState() {
+  try {
+    const stateToSave = { ...state };
+    // We cannot serialize DOM elements or full class instances easily,
+    // so we only save the raw data needed to rebuild the state.
+    if (stateToSave.questionnaire) {
+      stateToSave.questionnaireData = {
+        mode: stateToSave.questionnaire.mode,
+        answers: stateToSave.questionnaire.answers,
+        currentStep: stateToSave.questionnaire.currentStep
+      };
+      delete stateToSave.questionnaire; // exclude class instance
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+  } catch (e) {
+    console.warn('Failed to save state to localStorage', e);
+  }
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+
+      // Reconstitute questionnaire if it existed
+      if (state.questionnaireData) {
+        state.questionnaire = new Questionnaire(state.questionnaireData.mode);
+        state.questionnaire.answers = state.questionnaireData.answers || {};
+        state.questionnaire.currentStep = state.questionnaireData.currentStep || 0;
+        delete state.questionnaireData;
+      }
+      return true;
+    }
+  } catch (e) {
+    console.warn('Failed to load state from localStorage', e);
+  }
+  return false;
+}
 
 // ─── DOM REFS ─────────────────────────────────────────────────────────────────
 
@@ -37,6 +84,7 @@ function render() {
     case 'PROCESSING': renderProcessing(); break;
     case 'OUTPUT': renderOutputScreen(); break;
   }
+  saveState();
 }
 
 // ─── SCREENS ──────────────────────────────────────────────────────────────────
@@ -121,10 +169,10 @@ function renderModeSelect() {
             <ul class="preset-quick-tags">
               <li>🌾 2x Farming</li>
               <li>🦖 10x Taming</li>
-              <li>⏱️ ~38 min Ei / ~2h26m Auswachsen</li>
+              <li>⏱️ ~8-22m Paarung / ~12m Ei / ~1h10m Auswachsen</li>
               <li>🐉 Vanilla Wild Dinos</li>
             </ul>
-            <p class="preset-quick-desc">Wie PvE Standard, aber realistisches Breeding. 1 Imprint bei ~80 min = 100%. Giga-optimiert.</p>
+            <p class="preset-quick-desc">Wie PvE Standard, aber realistisches Breeding. ~3m Mating-Dauer, 1 Imprint bei ~35 min = 100%. Giga-optimiert.</p>
             <button class="btn btn-preset" id="preset-pve-standard-qb-btn">Apply Now →</button>
           </div>
         </div>
@@ -406,7 +454,14 @@ function processConfig() {
       profile = buildProfile({ experience: 'beginner', mode: 'pve', weeklyHours: 10, groupSize: 1 });
       profile.preset = state.directPreset;
       weights = classify(profile);
-      rawValues = { ...preset }; // use preset values directly as raw values
+
+      // Inject all defaults first so the output file is complete
+      rawValues = {};
+      for (const s of SETTINGS_DB) {
+        rawValues[s.id] = s.default;
+      }
+      // Apply preset overrides on top
+      Object.assign(rawValues, preset);
     } else {
       // Mode B: build deep profile and calculate directly from answers
       const answers = state.questionnaire.answers;
@@ -455,43 +510,41 @@ function renderOutputScreen() {
   app.innerHTML = `
     <div class="screen output-screen">
       <div class="output-screen-header">
-        <button class="back-btn" id="out-back-btn">← Reconfigure</button>
-        <h2 class="screen-title">Your Server Configuration</h2>
-        <button class="btn btn-outline btn-sm" id="restart-btn">🔄 Start Over</button>
+        <button class="back-btn" id="start-over-btn" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3);">↺ Start Over</button>
+        <button class="back-btn" id="out-back-btn">← Back to Tuning</button>
+        <h2 class="screen-title">Your Configuration is Ready</h2>
       </div>
-
       <div class="output-layout">
-        <div class="output-main" id="output-main"></div>
-        <div class="output-sidebar">
-          <div id="tuner-container"></div>
-        </div>
+        <div id="output-container"></div>
+        <div id="tuner-container"></div>
       </div>
     </div>
   `;
 
-  const outputMain = document.getElementById('output-main');
+  const outputContainer = document.getElementById('output-container');
   const tunerContainer = document.getElementById('tuner-container');
 
   // Render output
-  renderOutput(outputMain, state.output, state.values);
+  renderOutput(outputContainer, state.output, state.values);
 
   // Render tuner
-  renderTuner(tunerContainer, state.values, state.profile, outputMain, (newValues) => {
+  renderTuner(tunerContainer, state.values, state.profile, outputContainer, (newValues) => {
     state.values = newValues;
+    // Re-generate output with new values from tuner
+    state.output = generate(state.values, state.profile);
+    renderOutput(outputContainer, state.output, state.values);
+    saveState(); // Save state after tuning
+  });
+
+  document.getElementById('start-over-btn').addEventListener('click', () => {
+    if (confirm('Are you sure you want to start over? This will clear your current configuration.')) {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload(); // Hard reset the app state
+    }
   });
 
   document.getElementById('out-back-btn').addEventListener('click', () => {
-    if (state.mode === 'PRESET') {
-      // Direct preset — go back to mode select
-      state.screen = 'MODE_SELECT';
-    } else {
-      state.screen = 'QUESTIONNAIRE';
-      state.questionnaire.currentIndex = 0;
-    }
-    render();
-  });
-  document.getElementById('restart-btn').addEventListener('click', () => {
-    state = { screen: 'WELCOME', mode: null, questionnaire: null, profile: null, weights: null, values: null, output: null };
+    state.screen = 'QUESTIONNAIRE';
     render();
   });
 }
@@ -503,4 +556,9 @@ function onQuestionnaireComplete(answers) {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 
-render();
+document.addEventListener('DOMContentLoaded', () => {
+  if (!loadState()) {
+    state.screen = 'WELCOME';
+  }
+  render();
+});

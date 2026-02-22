@@ -252,6 +252,11 @@ export function calculate(profile, weights) {
     const basePreset = getPreset(profile.experience, profile.mode);
     const result = {};
 
+    // Pre-fill result with all defaults from DB to ensure complete server config output
+    for (const setting of SETTINGS_DB) {
+        result[setting.id] = setting.default;
+    }
+
     for (const setting of SETTINGS_DB) {
         const id = setting.id;
 
@@ -259,7 +264,7 @@ export function calculate(profile, weights) {
         const anchorVal = ANCHOR_PRESET[id];
         const presetVal = basePreset[id];
 
-        // Skip if neither anchor nor preset defines this setting
+        // Skip if neither anchor nor preset defines this setting, the default is already in result
         if (anchorVal === undefined && presetVal === undefined) continue;
 
         // Use anchor if available, otherwise fall back to preset
@@ -334,7 +339,7 @@ export function calculateFromDeepConfig(profile) {
     const answers = profile.deepConfig || {};
     const preset = getPreset(profile.experience, profile.mode);
 
-    // Start with a full preset calculation (weight=1.0 for all)
+    // Start with a full preset calculation (weight=1.0 for all) which now includes all Base DB defaults
     const neutralWeights = {};
     for (const cat of ['taming', 'breeding', 'harvesting', 'xp', 'loot', 'difficulty', 'qol', 'pvp', 'building']) {
         neutralWeights[cat] = 1.0;

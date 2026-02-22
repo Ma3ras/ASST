@@ -10,7 +10,7 @@ import { generateTuningExplanation } from '../engine/generator.js';
  * @param {Object} values - Current setting values (for tuning reference)
  */
 export function renderOutput(container, output, values) {
-    container.innerHTML = `
+  container.innerHTML = `
     <div class="output-panel">
       <div class="output-summary">
         <div class="summary-icon">⚙️</div>
@@ -27,51 +27,85 @@ export function renderOutput(container, output, values) {
       <div class="ini-section">
         <div class="ini-header">
           <h3 class="section-title">📄 GameUserSettings.ini</h3>
-          <button class="copy-btn" data-target="gus-block" title="Copy to clipboard">
-            <span class="copy-icon">📋</span> Copy
-          </button>
+          <div class="ini-actions">
+            <button class="restore-btn" data-target="gus-block" title="Restore original generated config">
+              <span class="copy-icon">🔄</span> Restore
+            </button>
+            <button class="copy-btn" data-target="gus-block" title="Copy to clipboard">
+              <span class="copy-icon">📋</span> Copy
+            </button>
+          </div>
         </div>
-        <pre class="ini-block" id="gus-block">${highlightIni(output.gameUserSettingsIni)}</pre>
+        <textarea class="ini-block ini-textarea" id="gus-block" spellcheck="false">${escapeHtml(output.gameUserSettingsIni)}</textarea>
       </div>
 
       <div class="ini-section">
         <div class="ini-header">
           <h3 class="section-title">📄 Game.ini</h3>
-          <button class="copy-btn" data-target="game-block" title="Copy to clipboard">
-            <span class="copy-icon">📋</span> Copy
-          </button>
+          <div class="ini-actions">
+            <button class="restore-btn" data-target="game-block" title="Restore original generated config">
+              <span class="copy-icon">🔄</span> Restore
+            </button>
+            <button class="copy-btn" data-target="game-block" title="Copy to clipboard">
+              <span class="copy-icon">📋</span> Copy
+            </button>
+          </div>
         </div>
-        <pre class="ini-block" id="game-block">${highlightIni(output.gameIni)}</pre>
+        <textarea class="ini-block ini-textarea" id="game-block" spellcheck="false">${escapeHtml(output.gameIni)}</textarea>
       </div>
     </div>
   `;
 
-    // Attach copy button handlers
-    container.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetId = btn.getAttribute('data-target');
-            const pre = document.getElementById(targetId);
-            const text = pre.innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                btn.innerHTML = '<span class="copy-icon">✅</span> Copied!';
-                btn.classList.add('copied');
-                setTimeout(() => {
-                    btn.innerHTML = '<span class="copy-icon">📋</span> Copy';
-                    btn.classList.remove('copied');
-                }, 2000);
-            }).catch(() => {
-                // Fallback for non-HTTPS
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                btn.innerHTML = '<span class="copy-icon">✅</span> Copied!';
-                setTimeout(() => { btn.innerHTML = '<span class="copy-icon">📋</span> Copy'; }, 2000);
-            });
-        });
+  // Attach copy button handlers
+  container.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const targetEl = document.getElementById(targetId);
+      const text = targetEl.value || targetEl.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.innerHTML = '<span class="copy-icon">✅</span> Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = '<span class="copy-icon">📋</span> Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        // Fallback for non-HTTPS
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.innerHTML = '<span class="copy-icon">✅</span> Copied!';
+        setTimeout(() => { btn.innerHTML = '<span class="copy-icon">📋</span> Copy'; }, 2000);
+      });
     });
+  });
+
+  // Attach restore button handlers
+  container.querySelectorAll('.restore-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const targetEl = document.getElementById(targetId);
+
+      // Restore from original output object
+      if (targetId === 'gus-block') {
+        targetEl.value = output.gameUserSettingsIni;
+      } else if (targetId === 'game-block') {
+        targetEl.value = output.gameIni;
+      }
+
+      // Visual feedback
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="copy-icon">✅</span> Restored!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = originalHtml;
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  });
 }
 
 /**
@@ -83,11 +117,11 @@ export function renderOutput(container, output, values) {
  * @param {string} feedbackLabel
  */
 export function renderTuningResult(container, changedIds, oldValues, newValues, feedbackLabel) {
-    const explanations = generateTuningExplanation(changedIds, oldValues, newValues);
+  const explanations = generateTuningExplanation(changedIds, oldValues, newValues);
 
-    const div = document.createElement('div');
-    div.className = 'tuning-result';
-    div.innerHTML = `
+  const div = document.createElement('div');
+  div.className = 'tuning-result';
+  div.innerHTML = `
     <div class="tuning-header">
       <span class="tuning-icon">🔧</span>
       <span>Adjusted for: <strong>${escapeHtml(feedbackLabel)}</strong></span>
@@ -98,35 +132,35 @@ export function renderTuningResult(container, changedIds, oldValues, newValues, 
     <div class="tuning-note">Config blocks above have been updated. Re-copy the INI files.</div>
   `;
 
-    // Insert before the ini sections
-    const iniSection = container.querySelector('.ini-section');
-    if (iniSection) {
-        container.querySelector('.output-panel').insertBefore(div, iniSection);
-    } else {
-        container.querySelector('.output-panel')?.appendChild(div);
-    }
+  // Insert before the ini sections
+  const iniSection = container.querySelector('.ini-section');
+  if (iniSection) {
+    container.querySelector('.output-panel').insertBefore(div, iniSection);
+  } else {
+    container.querySelector('.output-panel')?.appendChild(div);
+  }
 }
 
 /**
  * Syntax highlight an INI block.
  */
 function highlightIni(text) {
-    return escapeHtml(text)
-        .replace(/^(\[.+\])$/gm, '<span class="ini-section-header">$1</span>')
-        .replace(/^([A-Za-z_]+)(=)/gm, '<span class="ini-key">$1</span><span class="ini-eq">$2</span>')
-        .replace(/(True|False)/g, '<span class="ini-bool">$1</span>')
-        .replace(/^(;.*)$/gm, '<span class="ini-comment">$1</span>');
+  return escapeHtml(text)
+    .replace(/^(\[.+\])$/gm, '<span class="ini-section-header">$1</span>')
+    .replace(/^([A-Za-z_]+)(=)/gm, '<span class="ini-key">$1</span><span class="ini-eq">$2</span>')
+    .replace(/(True|False)/g, '<span class="ini-bool">$1</span>')
+    .replace(/^(;.*)$/gm, '<span class="ini-comment">$1</span>');
 }
 
 function escapeHtml(str) {
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 function renderMarkdown(str) {
-    // Bold **text**
-    return str.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Bold **text**
+  return str.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 }

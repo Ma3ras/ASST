@@ -746,12 +746,17 @@ export const PRESETS = {
         player_harvesting_damage_multiplier: 1.0,
         dino_harvesting_damage_multiplier: 3.2,
         // Breeding — Quick Breeding (Giga-tuned)
-        mating_interval_multiplier: 0.0001,
-        mating_speed_multiplier: 40.0,
+        // Vanilla Values (User Observed):
+        // - Mating Interval: 18h - 48h
+        // - Egg Hatching: ~49.8h
+        // - Maturation: ~280h
+        // Target settings: ~8m-22m interval, ~3m speed, ~12m hatch, ~70m maturation, 1 imprint @ ~35m
+        mating_interval_multiplier: 0.0074,
+        mating_speed_multiplier: 0.833,
         lay_egg_interval_multiplier: 1.0,
-        egg_hatch_speed_multiplier: 8.0,
-        baby_mature_speed_multiplier: 75.0,
-        baby_cuddle_interval_multiplier: 0.174,
+        egg_hatch_speed_multiplier: 248.0,
+        baby_mature_speed_multiplier: 201.1,
+        baby_cuddle_interval_multiplier: 0.076,
         baby_imprinting_stat_scale_multiplier: 5.0,
         baby_imprint_amount_multiplier: 50.0,
         baby_food_consumption_speed_multiplier: 1.0,
@@ -880,23 +885,26 @@ export const PRESETS = {
     quick_breeding: {
         label: "Quick Breeding",
         description: "Breeding-only overlay preset, tuned for Giganotosaurus as reference. ~38 min egg, ~2h26min mature, 1 imprint at ~80 min = 100%.",
-        // Egg & maturation
-        egg_hatch_speed_multiplier: 8.0,
-        baby_mature_speed_multiplier: 75.0,
+        // Vanilla Values:
+        // - Mating Interval: 18h - 48h
+        // - Egg Hatching: ~49.8h
+        // - Maturation: ~280h
+        egg_hatch_speed_multiplier: 248.0,
+        baby_mature_speed_multiplier: 201.1,
         // Food consumption — keep manageable
         baby_food_consumption_speed_multiplier: 1.0,
-        // 1 cuddle per lifetime at ~80 min into growth (interval > half of 146 min maturation)
-        // 461 min vanilla × 0.174 = ~80 min
-        baby_cuddle_interval_multiplier: 0.174,
+        // 1 cuddle per lifetime at ~35 min into growth (interval > half of 70 min maturation)
+        // 461 min vanilla × 0.076 = ~35 min
+        baby_cuddle_interval_multiplier: 0.076,
         // Grace period: generous so player has time to react
         baby_cuddle_grace_period_multiplier: 5.0,
         // 50x guarantees 100% imprint on any dino from a single cuddle
         baby_imprint_amount_multiplier: 50.0,
         baby_imprinting_stat_scale_multiplier: 5.0,
         allow_anyone_baby_imprint_cuddle: true,
-        // Mating — instant
-        mating_interval_multiplier: 0.0001,
-        mating_speed_multiplier: 40.0,
+        // Mating — ~8m-22m interval, ~3m speed
+        mating_interval_multiplier: 0.0074,
+        mating_speed_multiplier: 0.833,
         lay_egg_interval_multiplier: 1.0,
     },
 

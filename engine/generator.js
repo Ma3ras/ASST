@@ -14,6 +14,8 @@ export function generate(values, profile) {
     const gusSettings = {};
 
     for (const setting of SETTINGS_DB) {
+        if (setting.exclude_from_generation) continue;
+
         const value = values[setting.id];
         if (value === undefined) continue;
 
@@ -27,6 +29,34 @@ export function generate(values, profile) {
             if (!gusSettings[section]) gusSettings[section] = [];
             gusSettings[section].push({ key: setting.key, value: formatted, effect: setting.gameplay_effect });
         }
+    }
+
+    // Reorder [ServerSettings] to put placeholders at the top
+    if (gusSettings["ServerSettings"]) {
+        const topKeys = [
+            "ServerPassword",
+            "ServerAdminPassword",
+            "SpectatorPassword",
+            "RCONEnabled",
+            "RCONPort",
+            "RCONServerGameLogBuffer"
+        ];
+
+        const topEntries = [];
+        const otherEntries = [];
+
+        for (const entry of gusSettings["ServerSettings"]) {
+            if (topKeys.includes(entry.key)) {
+                topEntries.push(entry);
+            } else {
+                otherEntries.push(entry);
+            }
+        }
+
+        // Ensure the order matches `topKeys` array for consistency
+        topEntries.sort((a, b) => topKeys.indexOf(a.key) - topKeys.indexOf(b.key));
+
+        gusSettings["ServerSettings"] = [...topEntries, ...otherEntries];
     }
 
     const gameIni = buildIniBlock(gameIniSettings);
